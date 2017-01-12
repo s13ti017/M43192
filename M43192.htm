@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<!-- saved from url=(0052)http://www.edu.ics.saitama-u.ac.jp/~s13ti017/M43192/ -->
+<!DOCTYPE html PUBLIC "" ""><HTML><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+   
+<META http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<SCRIPT src="https://code.jquery.com/jquery-1.11.3.min.js"></SCRIPT>
+   
+<SCRIPT src="https://skyway.io/dist/0.3/peer.min.js"></SCRIPT>
+   
+<SCRIPT src="https://skyway.io/dist/multiparty.min.js"></SCRIPT>
+   
+<STYLE> video { width:200px; } </STYLE>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.10570.1001"></HEAD> 
+<BODY>
+<DIV id="streams"></DIV>
+<DIV>
+<FORM><INPUT type="text"><BUTTON type="submit">send</BUTTON>     </FORM>
+<DIV id="message"></DIV></DIV>
+<DIV>
+<P id="p_hatugen">逋ｺ險繧ｳ繧､繝ｳ:10譫&#65533;</P>
+<P id="p_hyouka">隧穂ｾ｡繧ｳ繧､繝ｳ:0譫&#65533;</P>
+<P id="volume">Volume:NULL</P></DIV>
+<SCRIPT type="text/javascript">
+
+    var speak_coin = 10;
+    var hyouka_coin = 0;
+    
+    var myId = "-1";
+    
+    var audioContext = null;
+var meter = null;
+var canvasContext = null;
+var WIDTH=500;
+var HEIGHT=50;
+var rafID = null;
+
+    
+  // MultiParty 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧堤函謌&#65533;
+  multiparty = new MultiParty( {
+    "key": "58370e0a-1878-46a0-a612-5aaa98de66ad"  /* SkyWay key繧呈欠螳&#65533; */
+  });
+
+  multiparty.on('my_ms', function(video) {
+    // 閾ｪ蛻・・video繧定｡ｨ遉ｺ
+    var vNode = MultiParty.util.createVideoNode(video);
+    $(vNode).appendTo("#streams");
+      console.log($(vNode).attr('id'));
+      
+      myId=$(vNode).attr('id');
+  }).on('peer_ms', function(video) {
+    // peer縺ｮvideo繧定｡ｨ遉ｺ
+    var vNode = MultiParty.util.createVideoNode(video);
+    $(vNode).appendTo("#streams");
+    console.log($(vNode).attr('id'));
+      var tmp = "<button onClick=\"hyouka('"+$(vNode).attr('id')+"')\" id=\""+$(vNode).attr('id')+"_btn\">隧穂ｾ｡縺吶ｋ</button>";
+      console.log(tmp);
+    $("#streams").append(tmp);
+  }).on('ms_close', function(peer_id) {
+    // peer縺悟・繧後◆繧峨∝ｯｾ雎｡縺ｮvideo繝弱・繝峨ｒ蜑企勁縺吶ｋ
+    $("#"+peer_id).remove();
+    $("#"+peer_id+"_btn").remove();
+  });
+
+  // 繧ｵ繝ｼ繝舌→peer縺ｫ謗･邯&#65533;
+  multiparty.start()
+
+  
+    //繝・く繧ｹ繝医ｒ蜈･蜉帙＠縲《ubmit縺励◆縺ｨ縺&#65533;
+  $("form").on("submit", function(ev) {
+
+    //onsubmit縺ｮ繝・ヵ繧ｩ繝ｫ繝亥虚菴懶ｼ・eload・峨ｒ謚大宛
+    ev.preventDefault();
+
+    //繝・く繧ｹ繝医ｒ蜿門ｾ&#65533;
+    var $input = $(this).find("input[type=text]"); 
+    var data = $input.val();
+    $input.val("");
+
+    //繝・く繧ｹ繝医ｒ陦ｨ遉ｺ
+    $("#message").append(data + "<br>");
+
+    //peer縺ｫ繝｡繝・そ繝ｼ繧ｸ繧帝∽ｿ｡
+    multiparty.send(data);
+
+  });
+
+  // peer縺九ｉ繝・く繧ｹ繝医Γ繝・そ繝ｼ繧ｸ繧貞女菫｡縺励◆縺ｨ縺&#65533;
+  multiparty.on('message', function(mesg) {
+      console.log("mesg:"+mesg.data);
+      console.log("myId:"+myId);
+      if(mesg.data==myId){
+          speak_coin++;
+      }
+      $("#p_hatugen").text("逋ｺ險繧ｳ繧､繝ｳ:"+speak_coin+"譫&#65533;");
+    //$("#message").append(mesg.data + "<br>");
+  });
+    
+    function hyouka(id){
+        multiparty.send(id);
+    }
+    
+    
+   
+</SCRIPT>
+ </BODY></HTML>
