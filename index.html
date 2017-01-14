@@ -178,6 +178,7 @@
     var speaking = false;
     //発言ボタン押下．
     function on_speak_button_down(){
+        if(speak_coin==0)return;
         console.log("on_speak_button_down");
         speaking=true;
         minus_speak_coin();
