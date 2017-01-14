@@ -4,6 +4,7 @@
     <script src="https://skyway.io/dist/0.3/peer.min.js"></script>
     <script src="https://skyway.io/dist/multiparty.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <title>M43192</title>
     <style>
       body {
         margin: 0;
@@ -44,7 +45,9 @@
     <p id="speak_coin_p">発言コイン：10</p>
     <p id="rate_coin_p">評価コイン：0</p>
     <button id="speak_btn">発言する</button>
-    <p>TEST</p>
+    <div id="log">
+      
+    </div>
     <div id="streams">
         
     </div>
@@ -59,6 +62,8 @@
     var speak_coin=10;
     var rate_coin=0;
       
+    var log_id=0;  
+    
     function start() {
       // MultiParty インスタンスを生成
       multiparty = new MultiParty( {
@@ -115,6 +120,8 @@
                 $("#rate_coin_p").text("評価コイン："+rate_coin);
                 $("#speak_btn").prop("disabled",false);
                 $("#speak_btn").css("background-color","#248");
+                $("#log_"+log_id).append("<p>ユーザー"+1+"から評価コインを受信");
+
                 if(!speaking){
                     $("#speak_btn").text("発言する");
                 }
@@ -220,6 +227,8 @@
             //表示を更新
             $("#speak_coin_p").text("発言コイン："+speak_coin);
             $("#rate_coin_p").text("評価コイン："+rate_coin);
+            $("#log_"+log_id).append("<p>ユーザー"+1+"に評価コインを送信");
+            log_id=log_id+1;
         }
     }
       
