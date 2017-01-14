@@ -44,7 +44,7 @@
   <body>
     <p id="speak_coin_p">発言コイン：10</p>
     <p id="rate_coin_p">評価コイン：0</p>
-    <button id="speak_btn">発言する</button>
+    <button id="speak_btn">発言可</button>
     <div id="log">
       
     </div>
@@ -123,7 +123,7 @@
                 $("#log_"+log_id).append("<p>ユーザー"+1+"から評価コインを受信");
 
                 if(!speaking){
-                    $("#speak_btn").text("発言する");
+                    $("#speak_btn").text("発言可");
                 }
           }
       });
@@ -195,7 +195,7 @@
         multiparty.unmute({"audio": true});
         $("#"+myId).css("border","5px solid #ffffff");
         $("#speak_btn").css("background-color","#248");
-        $("#speak_btn").text("発言する");
+        $("#speak_btn").text("発言可");
     }
      //発言コインを減らして評価コインに変える．発言中なら自身をタイマーセット．
     function minus_speak_coin(){
