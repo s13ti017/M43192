@@ -166,6 +166,7 @@
             //発言終了.発言ボタン無効化．
             speaking=false;
             $("#speak_btn").prop("disabled",true);
+            on_speak_button_up();
         }
         if(speaking){
             //発言中ならタイマーをセット
