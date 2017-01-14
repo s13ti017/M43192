@@ -29,13 +29,21 @@
         -moz-transform: scaleX(-1);
         transform: scaleX(-1);
       }
+        #speak_btn{
+            background-color: #248;
+            color: #fff;
+            border-style: none;
+            font-size: 1.4em;
+            font-weight: bold;
+            padding: 10px 30px;
+        }
     </style>
   </head>
 
   <body>
-    <button id="speak_btn">しゃべる</button>
     <p id="speak_coin_p">発言コイン：10</p>
     <p id="rate_coin_p">評価コイン：0</p>
+    <button id="speak_btn">発言する</button>
     <div id="streams">
         
     </div>
@@ -165,6 +173,7 @@
         multiparty.send("start:"+myId);
         multiparty.mute({"audio": true});
         $("#"+myId).css("border","5px solid #ff0000");
+        $("#speak_btn").css("background-color","#ff0000");
     }
     //発言ボタン押下終了．
     function on_speak_button_up(){
@@ -173,6 +182,7 @@
         multiparty.send("end:"+myId);
         multiparty.unmute({"audio": true});
         $("#"+myId).css("border","5px solid #ffffff");
+        $("#speak_btn").css("background-color","#248");
     }
      //発言コインを減らして評価コインに変える．発言中なら自身をタイマーセット．
     function minus_speak_coin(){
