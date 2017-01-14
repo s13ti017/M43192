@@ -20,8 +20,8 @@
       .video{
         margin: 0px 0px 0px 5px;
         width: 300px;
-        border: 1px solid #000000;
-        border-radius: 10px;
+        border: 5px solid #ffffff;
+        /*border-radius: 10px;*/
       }
       #streams .my-video {
         -webkit-transform: scaleX(-1);
@@ -33,24 +33,20 @@
   </head>
 
   <body>
-    <div id="message">
-      <form>
-        <input type="text"><button type="submit">send</button>
-      </form>
-      <p class="receive">
-      </p>
-    </div>
-    <div id="streams">
-      <div>
-        <button id="video-mute" data-muted="false">video mute</button>
-        <button id="audio-mute" data-muted="false">audio mute</button>
-    </div>
+    <button id="speak_btn">しゃべる</button>
+    <p id="speak_coin_p">発言コイン：10</p>
+    <p id="rate_coin_p">評価コイン：0</p>
   </body>
 
   <script>
 
     var multiparty;
-
+      
+    var myId;
+      
+    var speak_coin=10;
+    var rate_coin=0;
+      
     function start() {
       // MultiParty インスタンスを生成
       multiparty = new MultiParty( {
@@ -67,6 +63,7 @@
         vNode.setAttribute("class", "video my-video");
         vNode.volume = 0;
         $(vNode).appendTo("#streams");
+        myId=$(vNode).attr('id');
       }).on('peer_ms', function(video) {
         console.log("video received!!")
         // peerのvideoを表示
@@ -75,7 +72,8 @@
         vNode.setAttribute("class", "video peer-video");
         $(vNode).appendTo("#streams");
         $(vNode).click(function(){
-            console.log($(vNode).attr('id'));
+            //console.log($(vNode).attr('id'));
+            on_video_click($(vNode).attr('id'));
         });
         console.log($("#streams"))
       }).on('ms_close', function(peer_id) {
@@ -87,7 +85,19 @@
       // for DataChannel
       multiparty.on('message', function(mesg) {
         // peerからテキストメッセージを受信
-        $("p.receive").append(mesg.data + "<br>");
+        //$("p.receive").append(mesg.data + "<br>");
+          if(mesg.data.match(/start:/)){
+              //装飾
+              $("#"+mesg.data.replace(/start:/,"")).css("boder","5px solid #ff0000"); 
+          }
+          else if(mesg.data.match(/end:/)){
+              //装飾解除
+              $("#"+mesg.data.replace(/end:/,"")).css("boder","5px solid #ffffff");
+          }
+          else if(mesg.data.match(/rate:/) && mesg.data.replace(/rate:/,"")==myId){
+              //発言コインを追加
+              speak_coin++;
+          }
       });
 
       ////////////////////////////////
@@ -133,5 +143,50 @@
     }
 
     start();
+      
+    $("#speak_btn").mousedown(on_speak_button_down);
+    $("#speak_btn").mouseup(on_speak_button_up);
+      
+    var speaking = false;
+    //発言コインを減らして評価コインに変える．発言中なら自身をタイマーセット．
+    function minus_speak_coin(){
+        speak_coin--;
+        rate_coin++;
+        if(speak_coin==0){
+            //発言終了.発言ボタン無効化．
+            $("speak_btn").prop("disabled",true);
+        }
+        if(speaking){
+            //発言中ならタイマーをセット
+            setInterval(minus_speak_coin,1000);
+        }
+        //表示を更新
+        $("#speak_coin_p").text("発言コイン："+speak_coin);
+        $("#rate_coin_p").text("評価コイン："+rate_coin);
+    }
+    //発言ボタン押下．
+    function on_speak_button_down(){
+        minus_speak_coin();
+        speaking=true;
+        multiparty.send("start:"+myId);
+        multiparty.mute({"video": false, "audio": true});
+        $("#"+myId).css("boder","5px solid #ff0000");
+    }
+    //発言ボタン押下終了．
+    function on_speak_button_up(){
+        speaking=false;
+        multiparty.send("end:"+myId);
+        multiparty.unmute({"video": false, "audio": true});
+        $("#"+myId).css("boder","5px solid #ffffff");
+    }
+    
+    //映像クリック(=評価)
+    function on_video_click(id){
+        if(rate_coin>0){
+            multiparty.send("rate:"+id);
+            rate_coin--;
+        }
+    }
+      
  </script>
 </html>
