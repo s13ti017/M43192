@@ -204,6 +204,7 @@
         rate_coin++;
         if(speak_coin==0){
             //発言終了.発言ボタン無効化．
+            console.log("coin zero");
             speaking=false;
             multiparty.send("end:"+myId);
             multiparty.unmute({"audio": true});
