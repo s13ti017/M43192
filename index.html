@@ -92,11 +92,11 @@
           console.log(mesg.data);
           if(mesg.data.match(/start:/)){
               //装飾
-              $("#"+mesg.data.replace(/start:/,"")).css("boder","5px solid #ff0000"); 
+              $("#"+mesg.data.replace(/start:/,"")).css("border","5px solid #ff0000"); 
           }
           else if(mesg.data.match(/end:/)){
               //装飾解除
-              $("#"+mesg.data.replace(/end:/,"")).css("boder","5px solid #ffffff");
+              $("#"+mesg.data.replace(/end:/,"")).css("border","5px solid #ffffff");
           }
           else if(mesg.data.match(/rate:/) && mesg.data.replace(/rate:/,"")==myId){
               //発言コインを追加
