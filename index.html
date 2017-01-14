@@ -190,6 +190,9 @@
         if(rate_coin>0){
             multiparty.send("rate:"+id);
             rate_coin--;
+            //表示を更新
+            $("#speak_coin_p").text("発言コイン："+speak_coin);
+            $("#rate_coin_p").text("評価コイン："+rate_coin);
         }
     }
       
