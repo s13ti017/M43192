@@ -180,7 +180,7 @@
         minus_speak_coin();
         multiparty.send("start:"+myId);
         multiparty.mute({"audio": true});
-        $("#"+myId).css("boder","5px solid #ff0000");
+        $("#"+myId).css("bodrer","5px solid #ff0000");
     }
     //発言ボタン押下終了．
     function on_speak_button_up(){
@@ -188,7 +188,7 @@
         speaking=false;
         multiparty.send("end:"+myId);
         multiparty.unmute({"audio": true});
-        $("#"+myId).css("boder","5px solid #ffffff");
+        $("#"+myId).css("border","5px solid #ffffff");
     }
     
     //映像クリック(=評価)
