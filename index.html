@@ -101,6 +101,9 @@
           else if(mesg.data.match(/rate:/) && mesg.data.replace(/rate:/,"")==myId){
               //発言コインを追加
               speak_coin++;
+               //表示を更新
+                $("#speak_coin_p").text("発言コイン："+speak_coin);
+                $("#rate_coin_p").text("評価コイン："+rate_coin);
           }
       });
 
@@ -154,6 +157,7 @@
     var speaking = false;
     //発言コインを減らして評価コインに変える．発言中なら自身をタイマーセット．
     function minus_speak_coin(){
+        console.log("minus_speak_coin");
         speak_coin--;
         rate_coin++;
         if(speak_coin==0){
@@ -162,7 +166,7 @@
         }
         if(speaking){
             //発言中ならタイマーをセット
-            setInterval(minus_speak_coin,1000);
+            setInterval(minus_speak_coin,100);
         }
         //表示を更新
         $("#speak_coin_p").text("発言コイン："+speak_coin);
@@ -170,14 +174,16 @@
     }
     //発言ボタン押下．
     function on_speak_button_down(){
-        minus_speak_coin();
+        console.log("on_speak_button_down");
         speaking=true;
+        minus_speak_coin();
         multiparty.send("start:"+myId);
         multiparty.mute({"audio": true});
         $("#"+myId).css("boder","5px solid #ff0000");
     }
     //発言ボタン押下終了．
     function on_speak_button_up(){
+        console.log("on_speak_button_up");
         speaking=false;
         multiparty.send("end:"+myId);
         multiparty.unmute({"audio": true});
