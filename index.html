@@ -186,6 +186,7 @@
     
     //映像クリック(=評価)
     function on_video_click(id){
+        console.log("on_video_click");
         if(rate_coin>0){
             multiparty.send("rate:"+id);
             rate_coin--;
