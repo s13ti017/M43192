@@ -20,7 +20,7 @@
       .video{
         margin: 0px 0px 0px 5px;
         width: 300px;
-        border: 5px solid #ffffff;
+        border: 5px solid #ff0000;
         /*border-radius: 10px;*/
       }
       #streams .my-video {
@@ -160,10 +160,10 @@
         console.log("minus_speak_coin");
         speak_coin--;
         rate_coin++;
-        if(speak_coin<0){
+        if(speak_coin==0){
             //発言終了.発言ボタン無効化．
             speaking=false;
-            $("speak_btn").prop("disabled",true);
+            $("#speak_btn").prop("disabled",true);
         }
         if(speaking){
             //発言中ならタイマーをセット
