@@ -19,8 +19,8 @@ http-equiv="X-UA-Compatible">
 <FORM><INPUT type="text"><BUTTON type="submit">send</BUTTON>     </FORM>
 <DIV id="message"></DIV></DIV>
 <DIV>
-<P id="p_hatugen">発言コイン:10�&#65533;</P>
-<P id="p_hyouka">評価コイン:0�&#65533;</P>
+<P id="p_hatugen">発言コイン：10</P>
+<P id="p_hyouka">評価コイン：0</P>
 <P id="volume">Volume:NULL</P></DIV>
 <SCRIPT type="text/javascript">
 
@@ -37,63 +37,59 @@ var HEIGHT=50;
 var rafID = null;
 
     
-  // MultiParty インスタンスを生�&#65533;
+  // MultiParty インスタンスを生成
   multiparty = new MultiParty( {
-    "key": "58370e0a-1878-46a0-a612-5aaa98de66ad"  /* SkyWay keyを指�&#65533; */
+    "key": "58370e0a-1878-46a0-a612-5aaa98de66ad"
   });
 
   multiparty.on('my_ms', function(video) {
-    // 自刁E�Evideoを表示
+    // 自身のVideo
     var vNode = MultiParty.util.createVideoNode(video);
     $(vNode).appendTo("#streams");
       console.log($(vNode).attr('id'));
       
       myId=$(vNode).attr('id');
   }).on('peer_ms', function(video) {
-    // peerのvideoを表示
+    // peerのVideo
     var vNode = MultiParty.util.createVideoNode(video);
     $(vNode).appendTo("#streams");
     console.log($(vNode).attr('id'));
-      var tmp = "<button onClick=\"hyouka('"+$(vNode).attr('id')+"')\" id=\""+$(vNode).attr('id')+"_btn\">評価する</button>";
+      var tmp = "<button onClick=\"hyouka('"+$(vNode).attr('id')+"')\" id=\""+$(vNode).attr('id')+"_btn\">隧穂ｾ｡縺吶ｋ</button>";
       console.log(tmp);
     $("#streams").append(tmp);
   }).on('ms_close', function(peer_id) {
-    // peerが�Eれたら、対象のvideoノ�Eドを削除する
+    // peerが切れたら削除
     $("#"+peer_id).remove();
     $("#"+peer_id+"_btn").remove();
   });
 
-  // サーバとpeerに接�&#65533;
+  // 
   multiparty.start()
 
   
-    //チE��ストを入力し、submitしたと�&#65533;
+    //
   $("form").on("submit", function(ev) {
 
-    //onsubmitのチE��ォルト動作！Eeload�E�を抑制
+    //
     ev.preventDefault();
 
-    //チE��ストを取�&#65533;
     var $input = $(this).find("input[type=text]"); 
     var data = $input.val();
     $input.val("");
 
-    //チE��ストを表示
     $("#message").append(data + "<br>");
 
-    //peerにメチE��ージを送信
     multiparty.send(data);
 
   });
 
-  // peerからチE��ストメチE��ージを受信したと�&#65533;
   multiparty.on('message', function(mesg) {
       console.log("mesg:"+mesg.data);
       console.log("myId:"+myId);
       if(mesg.data==myId){
           speak_coin++;
       }
-      $("#p_hatugen").text("発言コイン:"+speak_coin+"�&#65533;");
+      $("#p_hatugen").text("発言コイン："+speak_coin+"");
     //$("#message").append(mesg.data + "<br>");
   });
     
