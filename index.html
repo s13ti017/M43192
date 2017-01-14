@@ -75,7 +75,7 @@
         vNode.setAttribute("class", "video peer-video");
         $(vNode).appendTo("#streams");
         $(vNode).click(function(){
-            console.log("AA");
+            console.log($(vNode).attr('id'));
         });
         console.log($("#streams"))
       }).on('ms_close', function(peer_id) {
