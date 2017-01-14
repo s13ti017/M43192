@@ -174,6 +174,7 @@
         multiparty.mute({"audio": true});
         $("#"+myId).css("border","5px solid #ff0000");
         $("#speak_btn").css("background-color","#ff0000");
+        $("#speak_btn").text("発言中");
     }
     //発言ボタン押下終了．
     function on_speak_button_up(){
@@ -183,6 +184,7 @@
         multiparty.unmute({"audio": true});
         $("#"+myId).css("border","5px solid #ffffff");
         $("#speak_btn").css("background-color","#248");
+        $("#speak_btn").text("発言する");
     }
      //発言コインを減らして評価コインに変える．発言中なら自身をタイマーセット．
     function minus_speak_coin(){
