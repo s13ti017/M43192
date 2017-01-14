@@ -181,12 +181,12 @@
         if(speak_coin==0)return;
         console.log("on_speak_button_down");
         speaking=true;
-        minus_speak_coin();
-        multiparty.send("start:"+myId);
+         multiparty.send("start:"+myId);
         multiparty.mute({"audio": true});
         $("#"+myId).css("border","5px solid #ff0000");
         $("#speak_btn").css("background-color","#ff0000");
         $("#speak_btn").text("発言中");
+        minus_speak_coin();
     }
     //発言ボタン押下終了．
     function on_speak_button_up(){
