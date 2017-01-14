@@ -113,7 +113,10 @@
                 $("#speak_coin_p").text("発言コイン："+speak_coin);
                 $("#rate_coin_p").text("評価コイン："+rate_coin);
                 $("#speak_btn").prop("disabled",false);
-
+                $("#speak_btn").css("background-color","#248");
+                if(!speaking){
+                    $("#speak_btn").text("発言する");
+                }
           }
       });
 
@@ -194,8 +197,10 @@
         if(speak_coin==0){
             //発言終了.発言ボタン無効化．
             speaking=false;
-            $("#speak_btn").prop("disabled",true);
             on_speak_button_up();
+            $("#speak_btn").prop("disabled",true);
+            $("#speak_btn").text("発言不可");
+            $("#speak_btn").css("background-color","#696969");
         }
         if(speaking){
             //発言中ならタイマーをセット
