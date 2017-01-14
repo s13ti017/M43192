@@ -160,13 +160,13 @@
         console.log("minus_speak_coin");
         speak_coin--;
         rate_coin++;
-        if(speak_coin==0){
+        if(speak_coin<0){
             //発言終了.発言ボタン無効化．
             $("speak_btn").prop("disabled",true);
         }
         if(speaking){
             //発言中ならタイマーをセット
-            setInterval(minus_speak_coin,100);
+            setInterval(minus_speak_coin,1000);
         }
         //表示を更新
         $("#speak_coin_p").text("発言コイン："+speak_coin);
