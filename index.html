@@ -212,7 +212,7 @@
             $("#speak_btn").text("発言不可");
             $("#speak_btn").css("background-color","#696969");
         }
-        if(speaking){
+        else if(speaking){
             //発言中ならタイマーをセット
             setTimeout(minus_speak_coin,1000);
         }
