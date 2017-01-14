@@ -89,6 +89,7 @@
       multiparty.on('message', function(mesg) {
         // peerからテキストメッセージを受信
         //$("p.receive").append(mesg.data + "<br>");
+          console.log(mesg.data);
           if(mesg.data.match(/start:/)){
               //装飾
               $("#"+mesg.data.replace(/start:/,"")).css("boder","5px solid #ff0000"); 
@@ -172,14 +173,14 @@
         minus_speak_coin();
         speaking=true;
         multiparty.send("start:"+myId);
-        multiparty.mute({"video": false, "audio": true});
+        multiparty.mute({"audio": true});
         $("#"+myId).css("boder","5px solid #ff0000");
     }
     //発言ボタン押下終了．
     function on_speak_button_up(){
         speaking=false;
         multiparty.send("end:"+myId);
-        multiparty.unmute({"video": false, "audio": true});
+        multiparty.unmute({"audio": true});
         $("#"+myId).css("boder","5px solid #ffffff");
     }
     
