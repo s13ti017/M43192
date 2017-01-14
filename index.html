@@ -205,7 +205,9 @@
         if(speak_coin==0){
             //発言終了.発言ボタン無効化．
             speaking=false;
-            on_speak_button_up();
+            multiparty.send("end:"+myId);
+            multiparty.unmute({"audio": true});
+            $("#"+myId).css("border","5px solid #ffffff");
             $("#speak_btn").prop("disabled",true);
             $("#speak_btn").text("発言不可");
             $("#speak_btn").css("background-color","#696969");
